@@ -75,10 +75,24 @@ acceso a PostgreSQL:
 CREATE USER adoptapatitas_user WITH PASSWORD 'tu_password_local';
 CREATE DATABASE adoptapatitas_dev OWNER adoptapatitas_user;
 GRANT ALL PRIVILEGES ON DATABASE adoptapatitas_dev TO adoptapatitas_user;
+ALTER USER adoptapatitas_user CREATEDB;
 ```
+
+La última línea (`CREATEDB`) es necesaria para poder ejecutar
+`python manage.py test`, ya que Django crea automáticamente una base de
+datos temporal de pruebas y la destruye al finalizar.
 
 Asegúrate de que los valores de `DB_NAME`, `DB_USER` y `DB_PASSWORD` en tu
 `.env` coinciden con los que hayas usado aquí.
+
+> **Nota sobre el modelo de usuario:** el proyecto utiliza un modelo de
+> usuario personalizado (`usuarios.Usuario`, configurado mediante
+> `AUTH_USER_MODEL`). Si ya habías ejecutado `migrate` antes de que existiera
+> la app `usuarios`, tendrás que recrear tu base de datos de desarrollo desde
+> cero (borrarla y volver a crearla vacía con los comandos anteriores) antes
+> de continuar, ya que Django no permite cambiar `AUTH_USER_MODEL` sobre una
+> base de datos que ya tiene migraciones aplicadas con el usuario por
+> defecto.
 
 ### 6. Aplicar las migraciones
 
@@ -93,3 +107,9 @@ python manage.py runserver
 ```
 
 La aplicación estará disponible en `http://127.0.0.1:8000/`.
+
+### 8. Ejecutar los tests
+
+```bash
+python manage.py test
+```

@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'usuarios',
 ]
 
 MIDDLEWARE = [
@@ -97,6 +98,12 @@ DATABASES = {
         'PORT': os.environ.get('DB_PORT', '5432'),
     }
 }
+
+# Usuario personalizado de AdoptaPatitas (app usuarios). Debe configurarse
+# antes de generar las migraciones de la app usuarios: ver README para el
+# procedimiento de recreación de la base de datos de desarrollo si esto
+# cambia después de haber migrado con el usuario por defecto de Django.
+AUTH_USER_MODEL = 'usuarios.Usuario'
 
 
 # Password validation
