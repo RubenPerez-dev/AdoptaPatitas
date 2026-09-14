@@ -216,3 +216,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Django - archivos subidos por usuarios (p. ej. fotos de animales)
+media/
+
+# Django - archivos estáticos recolectados para producción
+staticfiles/
