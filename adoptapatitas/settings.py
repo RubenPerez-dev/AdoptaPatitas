@@ -70,7 +70,7 @@ ROOT_URLCONF = 'adoptapatitas.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -104,6 +104,11 @@ DATABASES = {
 # procedimiento de recreación de la base de datos de desarrollo si esto
 # cambia después de haber migrado con el usuario por defecto de Django.
 AUTH_USER_MODEL = 'usuarios.Usuario'
+
+# Autenticación: URLs de redirección estándar de Django.
+LOGIN_URL = 'usuarios:login'
+LOGIN_REDIRECT_URL = 'usuarios:zona_autenticada'
+LOGOUT_REDIRECT_URL = 'usuarios:login'
 
 
 # Password validation

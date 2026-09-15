@@ -113,3 +113,26 @@ La aplicación estará disponible en `http://127.0.0.1:8000/`.
 ```bash
 python manage.py test
 ```
+
+## Autenticación
+
+El registro público solo crea usuarios con rol `adoptante`: no existe
+ningún formulario público para elegir rol, y el backend fuerza ese valor
+de forma explícita al guardar el usuario, ignorando cualquier dato
+adicional que pudiera llegar en la petición.
+
+- **Registro:** `/usuarios/registro/` — crea el `Usuario` (rol `adoptante`
+  forzado en el backend) y su `PerfilAdoptante` en una única operación
+  atómica (`transaction.atomic()`). Si falla la creación del perfil, el
+  usuario tampoco queda creado.
+- **Login:** `/usuarios/login/` — usa `django.contrib.auth.views.LoginView`,
+  el mecanismo estándar de Django (usuario + contraseña).
+- **Logout:** `/usuarios/logout/` — usa `django.contrib.auth.views.LogoutView`
+  (solo acepta `POST`, protegido con CSRF).
+- **Zona autenticada mínima:** `/usuarios/zona-autenticada/` — página de
+  prueba protegida con `LoginRequiredMixin`; un usuario no autenticado es
+  redirigido automáticamente al login por el propio backend, no por el
+  frontend.
+
+No se ha implementado todavía: recuperación de contraseña, verificación de
+email, ni gestión administrativa de usuarios (cambio de rol).
